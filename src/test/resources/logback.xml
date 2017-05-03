@@ -10,7 +10,7 @@
 
     <logger name="com.github.jcustenborder.kafka.connect.solr" level="TRACE" />
 
-    <root level="TRACE">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,8 +33,8 @@ class SolrSinkConnectorConfig extends AbstractConfig {
   public final String username;
   public final String password;
   public final boolean useBasicAuthentication;
-  public int commitWithin;
-  public boolean ignoreUnknownFields;
+  public final int commitWithin;
+  public final boolean ignoreUnknownFields;
 
 
   protected SolrSinkConnectorConfig(ConfigDef configDef, Map<String, String> props) {

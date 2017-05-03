@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #
 # Copyright © 2016 Jeremy Custenborder (jcustenborder@gmail.com)
 #
@@ -14,10 +15,12 @@
 # limitations under the License.
 #
 
-name=httpsolr
-topics=twitter
-tasks.max=2
-connector.class=com.github.jcustenborder.kafka.connect.solr.HttpSolrSinkConnector
-solr.url=http://127.0.0.1:8984/solr/
-solr.topic=twitter
-solr.core.name=twitter
+: ${SUSPEND:='n'}
+
+set -e
+
+mvn clean package
+export KAFKA_JMX_OPTS="-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=${SUSPEND},address=5005"
+export CLASSPATH="$(find target/kafka-connect-target/usr/share/java -type f -name '*.jar' | tr '\n' ':')"
+
+connect-standalone config/connect-avro-docker.properties config/cloudsolr.properties

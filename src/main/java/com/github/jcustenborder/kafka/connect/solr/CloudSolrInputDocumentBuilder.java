@@ -15,41 +15,30 @@
  */
 package com.github.jcustenborder.kafka.connect.solr;
 
-import com.github.jcustenborder.kafka.connect.utils.VersionUtil;
-import org.apache.kafka.connect.sink.SinkConnector;
+import org.apache.kafka.connect.sink.SinkRecord;
+import org.apache.solr.client.solrj.request.UpdateRequest;
+import org.apache.solr.common.SolrInputDocument;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-
-public abstract class SolrSinkConnector extends SinkConnector {
-
-  Map<String, String> config;
-
-  @Override
-  public String version() {
-    return VersionUtil.version(this.getClass());
+class CloudSolrInputDocumentBuilder extends SolrInputDocumentBuilder<CloudSolrSinkConnectorConfig> {
+  CloudSolrInputDocumentBuilder(CloudSolrSinkConnectorConfig config) {
+    super(config);
   }
 
   @Override
-  public void start(Map<String, String> map) {
-    this.config = map;
-  }
+  public List<UpdateRequest> build(Collection<SinkRecord> records) {
+    UpdateRequest request = newUpdateRequest();
+    request.setParam("collection", this.config.collectionName);
 
-  @Override
-  public List<Map<String, String>> taskConfigs(int count) {
-    List<Map<String, String>> results = new ArrayList<>();
-
-    for (int i = 0; i < count; i++) {
-      results.add(config);
+    for (SinkRecord record : records) {
+      SolrInputDocument document = build(record);
+      request.add(document);
     }
 
-    return results;
+    return Arrays.asList(request);
   }
 
-  @Override
-  public void stop() {
-
-  }
 }

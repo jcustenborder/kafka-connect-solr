@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
 
-    Copyright © 2016 Jeremy Custenborder (jcustenborder@gmail.com)
+    Copyright Â© 2016 Jeremy Custenborder (jcustenborder@gmail.com)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -54,18 +54,13 @@
         <url>https://github.com/jcustenborder/kafka-connect-solr/issues</url>
     </issueManagement>
     <properties>
-        <solr.version>6.3.0</solr.version>
+        <solr.version>6.4.2</solr.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
             <version>${solr.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.jcustenborder.kafka.connect</groupId>
-            <artifactId>connect-utils</artifactId>
-            <version>[0.2.1,)</version>
         </dependency>
     </dependencies>
 </project>

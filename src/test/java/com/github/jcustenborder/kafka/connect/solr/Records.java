@@ -28,19 +28,6 @@ import java.util.Map;
 
 class Records {
 
-  public static class TestCase {
-    SinkRecord record;
-
-  }
-
-  public static class StructTestCase extends TestCase {
-    Struct struct;
-  }
-
-  public static class MapTestCase extends TestCase {
-    Map<String, Object> map;
-  }
-
   static MapTestCase map() {
     MapTestCase testCase = new MapTestCase();
 
@@ -100,5 +87,18 @@ class Records {
         struct().record,
         map().record
     );
+  }
+
+  public static class TestCase {
+    SinkRecord record;
+
+  }
+
+  public static class StructTestCase extends TestCase {
+    Struct struct;
+  }
+
+  public static class MapTestCase extends TestCase {
+    Map<String, Object> map;
   }
 }

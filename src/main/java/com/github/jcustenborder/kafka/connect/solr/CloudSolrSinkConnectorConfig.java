@@ -17,24 +17,25 @@ package com.github.jcustenborder.kafka.connect.solr;
 
 import org.apache.kafka.common.config.ConfigDef;
 
+import java.util.List;
 import java.util.Map;
 
-public class CloudSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
+class CloudSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
 
   public static final String ZOOKEEPER_HOSTS_CONFIG = "solr.zookeeper.hosts";
   public static final String ZOOKEEPER_CHROOT_CONFIG = "solr.zookeeper.chroot";
-  public static final String COLLECTION_NAME_CONFIG = "collection.name";
+  public static final String COLLECTION_NAME_CONFIG = "solr.collection.name";
   private static final String ZOOKEEPER_HOSTS_DOC = "Zookeeper hosts that are used to store solr configuration.";
   private static final String ZOOKEEPER_CHROOT_DOC = "Chroot within solr for the zookeeper configuration.";
   private static final String COLLECTION_NAME_DOC = "Name of the solr collection to write to.";
 
-  public final String zookeeperHosts;
+  public final List<String> zookeeperHosts;
   public final String zookeeperChroot;
   public final String collectionName;
 
   protected CloudSolrSinkConnectorConfig(Map<String, String> props) {
     super(config(), props);
-    this.zookeeperHosts = this.getString(ZOOKEEPER_HOSTS_CONFIG);
+    this.zookeeperHosts = this.getList(ZOOKEEPER_HOSTS_CONFIG);
     this.zookeeperChroot = this.getString(ZOOKEEPER_CHROOT_CONFIG);
     this.collectionName = this.getString(COLLECTION_NAME_CONFIG);
   }

@@ -21,7 +21,7 @@ import org.apache.kafka.common.config.ConfigDef;
 
 import java.util.Map;
 
-public class SolrSinkConnectorConfig extends AbstractConfig {
+class SolrSinkConnectorConfig extends AbstractConfig {
   public static final String SOLR_COMMIT_WITHIN_CONFIG = "solr.commit.within";
   public static final String COLUMN_IGNORE_UNKNOWN_FIELDS_CONFIG = "solr.ignore.unknown.fields";
   public static final String SOLR_USERNAME_CONFIG = "solr.username";

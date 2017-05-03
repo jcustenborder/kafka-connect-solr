@@ -19,7 +19,7 @@ import org.apache.kafka.common.config.ConfigDef;
 
 import java.util.Map;
 
-public class HttpSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
+class HttpSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
   public static final String CORE_NAME_CONFIG = "solr.core.name";
   public static final String SOLR_URL_CONFIG = "solr.url";
   private static final String CORE_NAME_DOC = "Name of the solr core to write to.";

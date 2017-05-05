@@ -52,6 +52,7 @@ solr.core.name=
 ```bash
 docker-compose exec solr-cloud solr zk upconfig -d /config/solrcloud -n twitter -z zookeeper:2181
 docker-compose exec solr-cloud solr create_collection -n twitter -c twitter
+docker-compose exec solr-standalone solr create_core -c twitter -d /config/solrcloud
 ```
 
 There is also a docker-compose script with configuration for zookeeper, solr cloud, and solr standalone. This can be used with `docker-compose up`

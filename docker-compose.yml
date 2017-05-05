@@ -56,9 +56,10 @@ services:
       - "ZOOKEEPER_PORT_2181_TCP_PORT=2181"
     volumes:
       - "./src/test/solr/solrcloud:/config/solrcloud"
-#      - "data:/opt/solr/data"
   solr-standalone:
     image: solr
     hostname: solr
     ports:
       - "8984:8983"
+    volumes:
+      - "./src/test/solr/solrcloud:/config/solrcloud"

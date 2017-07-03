@@ -25,9 +25,9 @@ class HttpSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
   public static final String SOLR_THREAD_COUNT_CONFIG = "solr.thread.count";
   private static final String SOLR_URL_DOC = "Url to connect to solr with.";
   private static final String SOLR_QUEUE_SIZE_DOC = "The number of documents to batch together before sending to Solr. See " +
-      "[ConcurrentUpdateSolrClient.Builder.withQueueSize(int)](https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withQueueSize-int-)";
+      "`ConcurrentUpdateSolrClient.Builder.withQueueSize(int) <https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withQueueSize-int->`_";
   private static final String SOLR_THREAD_COUNT_DOC = "The number of threads used to empty ConcurrentUpdateSolrClients queue. See " +
-      "[ConcurrentUpdateSolrClient.Builder.withThreadCount(int)](https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withThreadCount-int-)";
+      "`ConcurrentUpdateSolrClient.Builder.withThreadCount(int) <https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withThreadCount-int->`_";
 
 
   public final String solrUrl;

@@ -19,7 +19,7 @@ import com.github.jcustenborder.kafka.connect.utils.config.Description;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.Task;
 
-@Description("This connector is used to connect to [SolrCloud](https://cwiki.apache.org/confluence/display/solr/SolrCloud) " +
+@Description("This connector is used to connect to `SolrCloud <https://cwiki.apache.org/confluence/display/solr/SolrCloud>`_ " +
     "using the Zookeeper based configuration.")
 public class CloudSolrSinkConnector extends SolrSinkConnector {
   @Override

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
 
-    Copyright Â© 2016 Jeremy Custenborder (jcustenborder@gmail.com)
+    Copyright © 2016 Jeremy Custenborder (jcustenborder@gmail.com)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.github.jcustenborder.kafka.connect</groupId>
         <artifactId>kafka-connect-parent</artifactId>
-        <version>0.10.2.0-cp1</version>
+        <version>0.10.2.1-cp1</version>
     </parent>
     <artifactId>kafka-connect-solr</artifactId>
     <version>0.1-SNAPSHOT</version>

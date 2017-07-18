@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.github.jcustenborder.kafka.connect</groupId>
         <artifactId>kafka-connect-parent</artifactId>
-        <version>0.10.2.1-cp1</version>
+        <version>0.10.2.1-cp2</version>
     </parent>
     <artifactId>kafka-connect-solr</artifactId>
     <version>0.1-SNAPSHOT</version>
@@ -41,9 +41,6 @@
             </roles>
         </developer>
     </developers>
-    <prerequisites>
-        <maven>3.3.0</maven>
-    </prerequisites>
     <scm>
         <connection>scm:git:https://github.com/jcustenborder/kafka-connect-solr.git</connection>
         <developerConnection>scm:git:git@github.com:jcustenborder/kafka-connect-solr.git</developerConnection>

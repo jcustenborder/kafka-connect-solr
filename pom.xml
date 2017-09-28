@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.github.jcustenborder.kafka.connect</groupId>
         <artifactId>kafka-connect-parent</artifactId>
-        <version>0.10.2.1-cp2</version>
+        <version>0.11.0.0-cp5</version>
     </parent>
     <artifactId>kafka-connect-solr</artifactId>
     <version>0.1-SNAPSHOT</version>

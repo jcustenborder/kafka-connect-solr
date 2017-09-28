@@ -17,7 +17,7 @@
 version: "2"
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:3.2.0-1
+    image: confluentinc/cp-zookeeper:3.2.2
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       zk_id: "1"
@@ -25,7 +25,7 @@ services:
       - "2181:2181"
   kafka:
     hostname: kafka
-    image: confluentinc/cp-kafka:3.2.0-1
+    image: confluentinc/cp-kafka:3.2.2
     links:
       - zookeeper
     ports:
@@ -34,7 +34,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://:9092"
   schema-registry:
-    image: confluentinc/cp-schema-registry:3.2.0-1
+    image: confluentinc/cp-schema-registry:3.2.2
     links:
       - kafka
       - zookeeper

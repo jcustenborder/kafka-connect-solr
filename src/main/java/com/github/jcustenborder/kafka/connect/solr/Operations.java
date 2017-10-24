@@ -41,6 +41,9 @@ class Operations {
     }
     this.operations.add(result);
     this.lastOperationIsDelete = delete;
+    if (this.config.commitWithin > 0) {
+      result.setCommitWithin(this.config.commitWithin);
+    }
     return result;
   }
 

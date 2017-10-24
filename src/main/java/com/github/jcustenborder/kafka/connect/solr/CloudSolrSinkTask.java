@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,35 +16,56 @@
 package com.github.jcustenborder.kafka.connect.solr;
 
 
-import org.apache.kafka.clients.consumer.OffsetAndMetadata;
-import org.apache.kafka.common.TopicPartition;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
+import org.apache.solr.client.solrj.request.UpdateRequest;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Map;
 
-public class CloudSolrSinkTask extends SolrSinkTask<CloudSolrSinkConnectorConfig, CloudSolrInputDocumentBuilder> {
+public class CloudSolrSinkTask extends SolrSinkTask<CloudSolrSinkConnectorConfig> {
+  private static final Logger log = LoggerFactory.getLogger(CloudSolrSinkTask.class);
+
   @Override
   protected CloudSolrSinkConnectorConfig config(Map settings) {
     return new CloudSolrSinkConnectorConfig(settings);
   }
 
-  @Override
-  protected CloudSolrInputDocumentBuilder documentBuilder() {
-    return new CloudSolrInputDocumentBuilder(this.config);
-  }
+  SolrClient client;
 
   @Override
-  protected SolrClient client() {
+  public void start(Map<String, String> settings) {
+    super.start(settings);
     CloudSolrClient.Builder builder = new CloudSolrClient.Builder();
     builder.withZkHost(this.config.zookeeperHosts);
     builder.withZkChroot(this.config.zookeeperChroot);
-    CloudSolrClient client = builder.build();
-    return client;
+    this.client = builder.build();
   }
 
   @Override
-  public void flush(Map<TopicPartition, OffsetAndMetadata> map) {
+  protected void process(String topic, UpdateRequest updateRequest) throws IOException, SolrServerException {
+    final String collection = collection(topic);
+    updateRequest.setParam("collection", collection);
+    UpdateResponse response = updateRequest.process(client);
+    log.trace("process() - qtime = {} elapsedTime = {}", response.getQTime(), response.getElapsedTime());
+  }
 
+  private String collection(String topic) {
+    return topic;
+  }
+
+  @Override
+  public void stop() {
+    try {
+      if (null != this.client) {
+        this.client.close();
+      }
+    } catch (IOException e) {
+      log.error("Exception thrown while closing client.", e);
+    }
   }
 }

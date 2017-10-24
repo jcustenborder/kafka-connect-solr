@@ -15,21 +15,18 @@
  */
 package com.github.jcustenborder.kafka.connect.solr;
 
-import com.github.jcustenborder.kafka.connect.utils.config.Description;
-import org.apache.kafka.common.config.ConfigDef;
-import org.apache.kafka.connect.connector.Task;
+import com.google.common.collect.MapDifference;
+import com.google.common.collect.Maps;
+import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.SolrInputField;
 
-@Description("This connector is used to connect to write directly to a Solr core.")
-public class HttpSolrSinkConnector extends SolrSinkConnector {
-  @Override
-  public Class<? extends Task> taskClass() {
-    return HttpSolrSinkTask.class;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class SolrInputDocumentAssertions {
+  public static void assertSolrInputDocument(SolrInputDocument expected, SolrInputDocument actual) {
+    assertNotNull(actual);
+    MapDifference<String, SolrInputField> difference = Maps.difference(expected, actual, new SolrInputFieldEquivalence());
+    assertTrue(difference.areEqual(), new MapDifferenceSupplier(difference));
   }
-
-  @Override
-  public ConfigDef config() {
-    return HttpSolrSinkConnectorConfig.config();
-  }
-
-
 }

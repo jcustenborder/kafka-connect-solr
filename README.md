@@ -1,52 +1,84 @@
-# Configuration
+# Source Connectors
 
 ## CloudSolrSinkConnector
 
 This connector is used to connect to `SolrCloud <https://cwiki.apache.org/confluence/display/solr/SolrCloud>`_ using the Zookeeper based configuration.
 
+### Configuration
+
+| Name                          | Type     | Importance | Default Value | Validator | Documentation                                                                                                                                                |
+| ----------------------------- | -------- | ---------- | ------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| solr.collection.name          | String   | High       |               |           | Name of the solr collection to write to.                                                                                                                     |
+| solr.zookeeper.hosts          | List     | High       |               |           | Zookeeper hosts that are used to store solr configuration.                                                                                                   |
+| solr.password                 | Password | High       | [hidden]      |           | The password to use for basic authentication.                                                                                                                |
+| solr.username                 | String   | High       |               |           | The username to use for basic authentication.                                                                                                                |
+| solr.zookeeper.chroot         | String   | High       |               |           | Chroot within solr for the zookeeper configuration.                                                                                                          |
+| solr.delete.documents.enabled | Boolean  | Medium     | true          |           | Flag to determine if the connector should delete documents. General practice in Kafka is to treat a record that contains a key with a null value as a delete.|
+| solr.commit.within            | Int      | Low        | -1            |           | Configures Solr UpdaterRequest for a commit within the requested number of milliseconds .                                                                    |
+
+
+#### Standalone Example
+
 ```properties
 name=connector1
 tasks.max=1
 connector.class=com.github.jcustenborder.kafka.connect.solr.CloudSolrSinkConnector
-
-# Set these required values
-solr.zookeeper.hosts=
+# The following values must be configured.
 solr.collection.name=
+solr.zookeeper.hosts=
 ```
 
-| Name                          | Description                                                                                                                                                   | Type     | Default  | Valid Values | Importance |
-|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|----------|--------------|------------|
-| solr.collection.name          | Name of the solr collection to write to.                                                                                                                      | string   |          |              | high       |
-| solr.zookeeper.hosts          | Zookeeper hosts that are used to store solr configuration.                                                                                                    | list     |          |              | high       |
-| solr.password                 | The password to use for basic authentication.                                                                                                                 | password | [hidden] |              | high       |
-| solr.username                 | The username to use for basic authentication.                                                                                                                 | string   | ""       |              | high       |
-| solr.zookeeper.chroot         | Chroot within solr for the zookeeper configuration.                                                                                                           | string   | null     |              | high       |
-| solr.delete.documents.enabled | Flag to determine if the connector should delete documents. General practice in Kafka is to treat a record that contains a key with a null value as a delete. | boolean  | true     |              | medium     |
-| solr.commit.within            | Configures Solr UpdaterRequest for a commit within the requested number of milliseconds .                                                                     | int      | -1       |              | low        |
+#### Distributed Example
+
+```json
+{
+    "name": "connector1",
+    "config": {
+        "connector.class": "com.github.jcustenborder.kafka.connect.solr.CloudSolrSinkConnector",
+        "solr.collection.name":"",
+        "solr.zookeeper.hosts":"",
+    }
+}
+```
 
 ## HttpSolrSinkConnector
 
 This connector is used to connect to write directly to a Solr core.
 
+### Configuration
+
+| Name                          | Type     | Importance | Default Value | Validator          | Documentation                                                                                                                                                                                                                                                                         |
+| ----------------------------- | -------- | ---------- | ------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| solr.url                      | String   | High       |               |                    | Url to connect to solr with.                                                                                                                                                                                                                                                          |
+| solr.password                 | Password | High       | [hidden]      |                    | The password to use for basic authentication.                                                                                                                                                                                                                                         |
+| solr.username                 | String   | High       |               |                    | The username to use for basic authentication.                                                                                                                                                                                                                                         |
+| solr.delete.documents.enabled | Boolean  | Medium     | true          |                    | Flag to determine if the connector should delete documents. General practice in Kafka is to treat a record that contains a key with a null value as a delete.                                                                                                                         |
+| solr.queue.size               | Int      | Medium     | 100           | [1,...,2147483647] | The number of documents to batch together before sending to Solr. See `ConcurrentUpdateSolrClient.Builder.withQueueSize(int) <https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withQueueSize-int->`_         |
+| solr.thread.count             | Int      | Medium     | 1             | [1,...,100]        | The number of threads used to empty ConcurrentUpdateSolrClients queue. See `ConcurrentUpdateSolrClient.Builder.withThreadCount(int) <https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withThreadCount-int->`_|
+| solr.commit.within            | Int      | Low        | -1            |                    | Configures Solr UpdaterRequest for a commit within the requested number of milliseconds .                                                                                                                                                                                             |
+
+
+#### Standalone Example
+
 ```properties
 name=connector1
 tasks.max=1
 connector.class=com.github.jcustenborder.kafka.connect.solr.HttpSolrSinkConnector
-
-# Set these required values
+# The following values must be configured.
 solr.url=
 ```
 
-| Name                          | Description                                                                                                                                                                                                                                                                            | Type     | Default  | Valid Values       | Importance |
-|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|----------|--------------------|------------|
-| solr.url                      | Url to connect to solr with.                                                                                                                                                                                                                                                           | string   |          |                    | high       |
-| solr.password                 | The password to use for basic authentication.                                                                                                                                                                                                                                          | password | [hidden] |                    | high       |
-| solr.username                 | The username to use for basic authentication.                                                                                                                                                                                                                                          | string   | ""       |                    | high       |
-| solr.delete.documents.enabled | Flag to determine if the connector should delete documents. General practice in Kafka is to treat a record that contains a key with a null value as a delete.                                                                                                                          | boolean  | true     |                    | medium     |
-| solr.queue.size               | The number of documents to batch together before sending to Solr. See `ConcurrentUpdateSolrClient.Builder.withQueueSize(int) <https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withQueueSize-int->`_          | int      | 100      | [1,...,2147483647] | medium     |
-| solr.thread.count             | The number of threads used to empty ConcurrentUpdateSolrClients queue. See `ConcurrentUpdateSolrClient.Builder.withThreadCount(int) <https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withThreadCount-int->`_ | int      | 1        | [1,...,100]        | medium     |
-| solr.commit.within            | Configures Solr UpdaterRequest for a commit within the requested number of milliseconds .                                                                                                                                                                                              | int      | -1       |                    | low        |
+#### Distributed Example
 
+```json
+    {
+        "name": "connector1",
+        "config": {
+        "connector.class": "com.github.jcustenborder.kafka.connect.solr.HttpSolrSinkConnector",
+            "solr.url":"",
+    }
+}
+```
 # Running in development
 
 ```bash

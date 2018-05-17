@@ -44,6 +44,12 @@ class Operations {
     if (this.config.commitWithin > 0) {
       result.setCommitWithin(this.config.commitWithin);
     }
+    if (this.config.useBasicAuthentication) {
+      result.setBasicAuthCredentials(
+          this.config.username,
+          this.config.password
+      );
+    }
     return result;
   }
 

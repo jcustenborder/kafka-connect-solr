@@ -1,0 +1,9 @@
+{
+  "name": "Basic Authentication",
+  "description": "This example will connect to a Solr Cloud cluster using basic authentication.",
+  "config": {
+    "solr.zookeeper.hosts": "zookeeper.example.com:2181",
+    "solr.username": "freddy",
+    "solr.password": "password12345"
+  }
+}

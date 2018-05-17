@@ -15,6 +15,7 @@
  */
 package com.github.jcustenborder.kafka.connect.solr;
 
+import com.github.jcustenborder.kafka.connect.utils.config.ConfigKeyBuilder;
 import org.apache.kafka.common.config.ConfigDef;
 
 import java.util.List;
@@ -27,24 +28,32 @@ class CloudSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
   public static final String COLLECTION_NAME_CONFIG = "solr.collection.name";
   private static final String ZOOKEEPER_HOSTS_DOC = "Zookeeper hosts that are used to store solr configuration.";
   private static final String ZOOKEEPER_CHROOT_DOC = "Chroot within solr for the zookeeper configuration.";
-  private static final String COLLECTION_NAME_DOC = "Name of the solr collection to write to.";
 
   public final List<String> zookeeperHosts;
   public final String zookeeperChroot;
-  public final String collectionName;
 
   protected CloudSolrSinkConnectorConfig(Map<String, String> props) {
     super(config(), props);
     this.zookeeperHosts = this.getList(ZOOKEEPER_HOSTS_CONFIG);
     this.zookeeperChroot = this.getString(ZOOKEEPER_CHROOT_CONFIG);
-    this.collectionName = this.getString(COLLECTION_NAME_CONFIG);
   }
 
 
   public static ConfigDef config() {
     return SolrSinkConnectorConfig.config()
-        .define(ZOOKEEPER_HOSTS_CONFIG, ConfigDef.Type.LIST, ConfigDef.Importance.HIGH, ZOOKEEPER_HOSTS_DOC)
-        .define(ZOOKEEPER_CHROOT_CONFIG, ConfigDef.Type.STRING, null, ConfigDef.Importance.HIGH, ZOOKEEPER_CHROOT_DOC)
-        .define(COLLECTION_NAME_CONFIG, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, COLLECTION_NAME_DOC);
+        .define(
+            ConfigKeyBuilder.of(ZOOKEEPER_HOSTS_CONFIG, ConfigDef.Type.LIST)
+            .importance(ConfigDef.Importance.HIGH)
+            .documentation(ZOOKEEPER_HOSTS_DOC)
+            .group(CONNECTION_GROUP)
+            .build()
+        ).define(
+            ConfigKeyBuilder.of(ZOOKEEPER_CHROOT_CONFIG, ConfigDef.Type.STRING)
+                .importance(ConfigDef.Importance.HIGH)
+                .documentation(ZOOKEEPER_CHROOT_DOC)
+                .group(CONNECTION_GROUP)
+                .defaultValue(null)
+                .build()
+        );
   }
 }

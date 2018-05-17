@@ -16,10 +16,16 @@
 package com.github.jcustenborder.kafka.connect.solr;
 
 import com.github.jcustenborder.kafka.connect.utils.config.Description;
+import com.github.jcustenborder.kafka.connect.utils.config.DocumentationTip;
+import com.github.jcustenborder.kafka.connect.utils.config.Title;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.Task;
 
+@Title("Standard Solr")
 @Description("This connector is used to connect to write directly to a Solr core.")
+@DocumentationTip("The target collection for this connector is selected by the topic name. " +
+    "`Transformations <https://kafka.apache.org/documentation/#connect_transforms>`_ like the " +
+    "RegexRouter transformation can be used to change the topic name before it is sent to Solr.")
 public class HttpSolrSinkConnector extends SolrSinkConnector {
   @Override
   public Class<? extends Task> taskClass() {
@@ -30,6 +36,4 @@ public class HttpSolrSinkConnector extends SolrSinkConnector {
   public ConfigDef config() {
     return HttpSolrSinkConnectorConfig.config();
   }
-
-
 }

@@ -1,0 +1,7 @@
+{
+  "name": "Standard",
+  "description": "This example will connect to a Solr Cloud cluster without authentication.",
+  "config": {
+    "solr.zookeeper.hosts": "zookeeper.example.com:2181"
+  }
+}

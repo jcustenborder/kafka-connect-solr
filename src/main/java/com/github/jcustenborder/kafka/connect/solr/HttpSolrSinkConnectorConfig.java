@@ -15,6 +15,7 @@
  */
 package com.github.jcustenborder.kafka.connect.solr;
 
+import com.github.jcustenborder.kafka.connect.utils.config.ConfigKeyBuilder;
 import org.apache.kafka.common.config.ConfigDef;
 
 import java.util.Map;
@@ -44,8 +45,26 @@ class HttpSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
 
   public static ConfigDef config() {
     return SolrSinkConnectorConfig.config()
-        .define(SOLR_URL_CONFIG, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, SOLR_URL_DOC)
-        .define(SOLR_QUEUE_SIZE_CONFIG, ConfigDef.Type.INT, 100, ConfigDef.Range.between(1, Integer.MAX_VALUE), ConfigDef.Importance.MEDIUM, SOLR_QUEUE_SIZE_DOC)
-        .define(SOLR_THREAD_COUNT_CONFIG, ConfigDef.Type.INT, 1, ConfigDef.Range.between(1, 100), ConfigDef.Importance.MEDIUM, SOLR_THREAD_COUNT_DOC);
+        .define(
+            ConfigKeyBuilder.of(SOLR_URL_CONFIG, ConfigDef.Type.STRING)
+                .importance(ConfigDef.Importance.HIGH)
+                .documentation(SOLR_URL_DOC)
+                .group(SolrSinkConnectorConfig.CONNECTION_GROUP)
+                .build()
+        ).define(
+            ConfigKeyBuilder.of(SOLR_QUEUE_SIZE_CONFIG, ConfigDef.Type.INT)
+                .importance(ConfigDef.Importance.HIGH)
+                .defaultValue(100)
+                .documentation(SOLR_QUEUE_SIZE_DOC)
+                .group(SolrSinkConnectorConfig.INDEXING_GROUP)
+                .build()
+        ).define(
+            ConfigKeyBuilder.of(SOLR_THREAD_COUNT_CONFIG, ConfigDef.Type.INT)
+                .importance(ConfigDef.Importance.MEDIUM)
+                .defaultValue(1)
+                .documentation(SOLR_THREAD_COUNT_DOC)
+                .group(SolrSinkConnectorConfig.INDEXING_GROUP)
+                .build()
+        );
   }
 }

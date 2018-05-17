@@ -15,6 +15,7 @@
  */
 package com.github.jcustenborder.kafka.connect.solr;
 
+import com.github.jcustenborder.kafka.connect.utils.config.ConfigKeyBuilder;
 import com.google.common.base.Strings;
 import org.apache.kafka.common.config.AbstractConfig;
 import org.apache.kafka.common.config.ConfigDef;
@@ -29,7 +30,9 @@ class SolrSinkConnectorConfig extends AbstractConfig {
 
   static final String SOLR_USERNAME_DOC = "The username to use for basic authentication.";
   static final String SOLR_PASSWORD_DOC = "The password to use for basic authentication.";
-  static final String SOLR_COMMIT_WITHIN_DOC = "Configures Solr UpdaterRequest for a commit within the requested number of milliseconds .";
+  static final String SOLR_COMMIT_WITHIN_DOC = "Configures Solr UpdaterRequest for a commit within " +
+      "the requested number of milliseconds. -1 disables the commit within setting and relies on " +
+      "the standard Solr commit setting.";
   static final String SOLR_DELETE_DOCUMENTS_DOC = "Flag to determine if the connector should delete documents. General " +
       "practice in Kafka is to treat a record that contains a key with a null value as a delete.";
 
@@ -49,11 +52,43 @@ class SolrSinkConnectorConfig extends AbstractConfig {
     this.deleteDocuments = this.getBoolean(SOLR_DELETE_DOCUMENTS_CONFIG);
   }
 
+  public static final String AUTHENTICATION_GROUP = "Authentication";
+  public static final String INDEXING_GROUP = "Indexing";
+  public static final String CONNECTION_GROUP = "Connection";
+
   public static ConfigDef config() {
     return new ConfigDef()
-        .define(SOLR_COMMIT_WITHIN_CONFIG, ConfigDef.Type.INT, -1, ConfigDef.Importance.LOW, SOLR_COMMIT_WITHIN_DOC)
-        .define(SOLR_USERNAME_CONFIG, ConfigDef.Type.STRING, "", ConfigDef.Importance.HIGH, SOLR_USERNAME_DOC)
-        .define(SOLR_PASSWORD_CONFIG, ConfigDef.Type.PASSWORD, "", ConfigDef.Importance.HIGH, SOLR_PASSWORD_DOC)
-        .define(SOLR_DELETE_DOCUMENTS_CONFIG, ConfigDef.Type.BOOLEAN, true, ConfigDef.Importance.MEDIUM, SOLR_DELETE_DOCUMENTS_DOC);
+        .define(
+            ConfigKeyBuilder.of(SOLR_USERNAME_CONFIG, ConfigDef.Type.STRING)
+                .defaultValue("")
+                .importance(ConfigDef.Importance.HIGH)
+                .documentation(SOLR_USERNAME_DOC)
+                .group(AUTHENTICATION_GROUP)
+                .build()
+        )
+        .define(
+            ConfigKeyBuilder.of(SOLR_PASSWORD_CONFIG, ConfigDef.Type.PASSWORD)
+                .defaultValue("")
+                .importance(ConfigDef.Importance.HIGH)
+                .documentation(SOLR_PASSWORD_DOC)
+                .group(AUTHENTICATION_GROUP)
+                .build()
+        )
+        .define(
+            ConfigKeyBuilder.of(SOLR_COMMIT_WITHIN_CONFIG, ConfigDef.Type.INT)
+                .defaultValue(-1)
+                .importance(ConfigDef.Importance.LOW)
+                .documentation(SOLR_COMMIT_WITHIN_DOC)
+                .group(INDEXING_GROUP)
+                .build()
+        )
+        .define(
+            ConfigKeyBuilder.of(SOLR_DELETE_DOCUMENTS_CONFIG, ConfigDef.Type.BOOLEAN)
+                .defaultValue(true)
+                .importance(ConfigDef.Importance.MEDIUM)
+                .documentation(SOLR_DELETE_DOCUMENTS_DOC)
+                .group(INDEXING_GROUP)
+                .build()
+        );
   }
 }

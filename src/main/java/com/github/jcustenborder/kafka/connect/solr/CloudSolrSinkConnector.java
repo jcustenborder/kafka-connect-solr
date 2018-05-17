@@ -16,11 +16,17 @@
 package com.github.jcustenborder.kafka.connect.solr;
 
 import com.github.jcustenborder.kafka.connect.utils.config.Description;
+import com.github.jcustenborder.kafka.connect.utils.config.DocumentationTip;
+import com.github.jcustenborder.kafka.connect.utils.config.Title;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.Task;
 
+@Title("Cloud Solr")
 @Description("This connector is used to connect to `SolrCloud <https://cwiki.apache.org/confluence/display/solr/SolrCloud>`_ " +
     "using the Zookeeper based configuration.")
+@DocumentationTip("The target collection for this connector is selected by the topic name. " +
+    "`Transformations <https://kafka.apache.org/documentation/#connect_transforms>`_ like the " +
+    "RegexRouter transformation can be used to change the topic name before it is sent to Solr.")
 public class CloudSolrSinkConnector extends SolrSinkConnector {
   @Override
   public Class<? extends Task> taskClass() {

@@ -1,0 +1,16 @@
+{
+  "name": "Force collection name",
+  "description": "In this example we do not care about the incoming topic name. We want to force all topics to a specific collection. This is accomplished by using the RegexRouter transformation that is bundled with Apache Kafka.",
+  "config": {
+    "solr.zookeeper.hosts": "zookeeper.example.com:2181",
+    "solr.username": "freddy",
+    "solr.password": "password12345"
+  },
+  "transformations": {
+    "dropPrefix": {
+      "type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "regex": ".*",
+      "replacement": "forced-collection"
+    }
+  }
+}

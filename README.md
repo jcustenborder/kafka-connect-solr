@@ -1,6 +1,6 @@
 # Introduction
 
-The SOLR connector is a high speed mechanism for writing data to [Apache Solr ](http://lucene.apache.org/solr/).
+The SOLR connector is a high speed mechanism for writing data to [Apache Solr](http://lucene.apache.org/solr/).
 
 ### Tip
 
@@ -11,11 +11,11 @@ If you are seeing error messages such as `Invalid version (expected 2, but 60) o
 
 ## Cloud Solr
 
-This connector is used to connect to [SolrCloud ](https://cwiki.apache.org/confluence/display/solr/SolrCloud) using the Zookeeper based configuration.
+This connector is used to connect to [SolrCloud](https://cwiki.apache.org/confluence/display/solr/SolrCloud) using the Zookeeper based configuration.
 
 ### Tip
 
-The target collection for this connector is selected by the topic name. [Transformations ](https://kafka.apache.org/documentation/#connect_transforms) like the RegexRouter transformation can be used to change the topic name before it is sent to Solr.
+The target collection for this connector is selected by the topic name. [Transformations](https://kafka.apache.org/documentation/#connect_transforms) like the RegexRouter transformation can be used to change the topic name before it is sent to Solr.
 
 
 ### Configuration

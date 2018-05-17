@@ -16,9 +16,9 @@
 package com.github.jcustenborder.kafka.connect.solr;
 
 import com.github.jcustenborder.kafka.connect.utils.VersionUtil;
+import com.github.jcustenborder.kafka.connect.utils.config.TaskConfigs;
 import org.apache.kafka.connect.sink.SinkConnector;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,13 +39,7 @@ public abstract class SolrSinkConnector extends SinkConnector {
 
   @Override
   public List<Map<String, String>> taskConfigs(int count) {
-    List<Map<String, String>> results = new ArrayList<>();
-
-    for (int i = 0; i < count; i++) {
-      results.add(config);
-    }
-
-    return results;
+    return TaskConfigs.multiple(this.config, count);
   }
 
   @Override

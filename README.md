@@ -1,10 +1,10 @@
-
 # Introduction
-
 
 The SOLR connector is a high speed mechanism for writing data to [Apache Solr ](http://lucene.apache.org/solr/).
 
+### Tip
 
+If you are seeing error messages such as `Invalid version (expected 2, but 60) or the data in not in 'javabin' format` compare the version of the Solr Server against the version of solrj the connector is compiled with. This error message is most likely due to a version mismatch between the server and solrj. To address this try replacing the solr-solrj-*.jar packaged with the connector with the version that matches the Solr server you are connecting to.
 
 # Sink Connectors
 

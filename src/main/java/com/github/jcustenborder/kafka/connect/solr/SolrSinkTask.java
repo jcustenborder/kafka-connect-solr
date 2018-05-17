@@ -60,6 +60,7 @@ public abstract class SolrSinkTask<CONFIG extends SolrSinkConnectorConfig> exten
         operations.delete().deleteById(id);
       } else {
         SolrInputDocument document = converter.convert(record.value());
+        log.trace("put() - Adding document to update. {}", document);
         operations.update().add(document);
       }
     }

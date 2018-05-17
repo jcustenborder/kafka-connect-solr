@@ -126,7 +126,7 @@ post the configuration to one the distributed connect worker(s).
     "solr.zookeeper.hosts" : "< Required Configuration >"
   }
 }
-[``
+```
 
 Use curl to post the configuration to one of the Kafka Connect Workers. Change `http://localhost:8083/` the the endpoint of
 one of your Kafka Connect worker(s).

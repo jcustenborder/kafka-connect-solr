@@ -195,7 +195,7 @@ Url to connect to solr with.
 
 ##### `solr.queue.size`
 
-The number of documents to batch together before sending to Solr. See `ConcurrentUpdateSolrClient.Builder.withQueueSize(int) ](https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withQueueSize-int-)
+The number of documents to batch together before sending to Solr. See [ConcurrentUpdateSolrClient.Builder.withQueueSize(int)](https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withQueueSize-int-)
 
 *Importance:* High
 
@@ -219,7 +219,7 @@ Flag to determine if the connector should delete documents. General practice in 
 
 ##### `solr.thread.count`
 
-The number of threads used to empty ConcurrentUpdateSolrClients queue. See `ConcurrentUpdateSolrClient.Builder.withThreadCount(int) ](https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withThreadCount-int-)
+The number of threads used to empty ConcurrentUpdateSolrClients queue. See [ConcurrentUpdateSolrClient.Builder.withThreadCount(int)](https://lucene.apache.org/solr/6_3_0/solr-solrj/org/apache/solr/client/solrj/impl/ConcurrentUpdateSolrClient.Builder.html#withThreadCount-int-)
 
 *Importance:* Medium
 

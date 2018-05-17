@@ -149,7 +149,7 @@ This connector is used to connect to write directly to a Solr core.
 
 ### Tip
 
-The target collection for this connector is selected by the topic name. `Transformations ](https://kafka.apache.org/documentation/#connect_transforms) like the RegexRouter transformation can be used to change the topic name before it is sent to Solr.
+The target collection for this connector is selected by the topic name. [Transformations](https://kafka.apache.org/documentation/#connect_transforms) like the RegexRouter transformation can be used to change the topic name before it is sent to Solr.
 
 
 ### Configuration
@@ -157,7 +157,7 @@ The target collection for this connector is selected by the topic name. `Transfo
 #### Authentication
 
 
-##### [solr.password`
+##### `solr.password`
 
 The password to use for basic authentication.
 

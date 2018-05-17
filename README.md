@@ -205,7 +205,7 @@ The number of documents to batch together before sending to Solr. See [Concurren
 
 
 
-##### [solr.delete.documents.enabled`
+##### `solr.delete.documents.enabled`
 
 Flag to determine if the connector should delete documents. General practice in Kafka is to treat a record that contains a key with a null value as a delete.
 

@@ -75,30 +75,20 @@
             <plugin>
                 <groupId>io.confluent</groupId>
                 <artifactId>kafka-connect-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>kafka-connect</goal>
-                        </goals>
-                        <configuration>
-                            <confluentControlCenterIntegration>true
-                            </confluentControlCenterIntegration>
-                            <documentationUrl>
-                                https://jcustenborder.github.io/kafka-connect-documentation/
-                            </documentationUrl>
-                            <componentTypes>
-                                <componentType>sink</componentType>
-                            </componentTypes>
-                            <tags>
-                                <tag>Apache Solr</tag>
-                                <tag>search</tag>
-                            </tags>
-                            <title>Kafka Connect Solr</title>
-                            <supportUrl>${pom.issueManagement.url}</supportUrl>
-                            <supportSummary>Support provided through community involvement.</supportSummary>
-                        </configuration>
-                    </execution>
-                </executions>
+                <configuration>
+                    <confluentControlCenterIntegration>true</confluentControlCenterIntegration>
+                    <documentationUrl>https://jcustenborder.github.io/kafka-connect-documentation/</documentationUrl>
+                    <tags>
+                        <tag>Apache Solr</tag>
+                        <tag>search</tag>
+                    </tags>
+                    <componentTypes>
+                        <componentType>sink</componentType>
+                    </componentTypes>
+                    <title>Kafka Connect Solr</title>
+                    <supportUrl>${pom.issueManagement.url}</supportUrl>
+                    <supportSummary>Support provided through community involvement.</supportSummary>
+                </configuration>
             </plugin>
         </plugins>
     </build>

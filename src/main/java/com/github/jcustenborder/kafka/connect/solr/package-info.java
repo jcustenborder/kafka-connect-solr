@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Introduction("\n" +
+@Introduction(
     "The SOLR connector is a high speed mechanism for writing data to `Apache Solr " +
-    "<http://lucene.apache.org/solr/>`_.")
+        "<http://lucene.apache.org/solr/>`_.")
 @Title("Apache Solr")
 @DocumentationTip("If you are seeing error messages such as `Invalid version " +
     "(expected 2, but 60) or the data in not in 'javabin' format` compare the version of " +
@@ -23,8 +23,12 @@
     "message is most likely due to a version mismatch between the server and solrj. To address this " +
     "try replacing the solr-solrj-*.jar packaged with the connector with the version that " +
     "matches the Solr server you are connecting to.")
+@PluginOwner("jcustenborder")
+@PluginName("kafka-connect-solr")
 package com.github.jcustenborder.kafka.connect.solr;
 
 import com.github.jcustenborder.kafka.connect.utils.config.DocumentationTip;
 import com.github.jcustenborder.kafka.connect.utils.config.Introduction;
+import com.github.jcustenborder.kafka.connect.utils.config.PluginName;
+import com.github.jcustenborder.kafka.connect.utils.config.PluginOwner;
 import com.github.jcustenborder.kafka.connect.utils.config.Title;

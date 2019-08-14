@@ -9,6 +9,7 @@
     </appender>
 
     <logger name="com.github.jcustenborder.kafka.connect.solr" level="TRACE" />
+    <logger name="org.reflections.Reflections" level="ERROR" />
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />

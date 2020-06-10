@@ -43,6 +43,8 @@ public class CloudSolrSinkTask extends SolrSinkTask<CloudSolrSinkConnectorConfig
     CloudSolrClient.Builder builder = new CloudSolrClient.Builder();
     builder.withZkHost(this.config.zookeeperHosts);
     builder.withZkChroot(this.config.zookeeperChroot);
+    builder.withConnectionTimeout(this.config.solrConnectTimeoutMs);
+    builder.withSocketTimeout(this.config.solrSocketTimeoutMs);
     this.client = builder.build();
     this.client.setZkConnectTimeout(this.config.zookeeperConnectTimeoutMs);
     this.client.setZkClientTimeout(this.config.zookeeperClientTimeoutMs);

@@ -28,6 +28,8 @@ class CloudSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
   public static final String ZOOKEEPER_CONNECT_TIMEOUT_CONFIG = "solr.zookeeper.connect.timeout.ms";
   public static final String ZOOKEEPER_CLIENT_TIMEOUT_CONFIG = "solr.zookeeper.client.timeout.ms";
   public static final String ZOOKEEPER_RETRY_EXPIRY_TIME_CONFIG = "solr.zookeeper.retry.expiry.time.ms";
+  public static final String SOLR_CONNECT_TIMEOUT_CONFIG = "solr.connect.timeout.ms";
+  public static final String SOLR_SOCKET_TIMEOUT_CONFIG = "solr.socket.timeout.ms";
 
 
   private static final String ZOOKEEPER_HOSTS_DOC = "Zookeeper hosts that are used to store solr configuration.";
@@ -36,12 +38,16 @@ class CloudSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
   private static final String ZOOKEEPER_CLIENT_TIMEOUT_DOC = "Set the timeout to the zookeeper ensemble in ms.";
   private static final String ZOOKEEPER_RETRY_EXPIRY_TIME_DOC = "This is the time to wait to refetch the " +
       "state after getting the same state version from ZK in ms.";
+  private static final String SOLR_CONNECT_TIMEOUT_DOC = "Set the connect timeout to the solr in ms.";
+  private static final String SOLR_SOCKET_TIMEOUT_DOC = "Set the solr read timeout on all sockets in ms.";
 
   public final List<String> zookeeperHosts;
   public final String zookeeperChroot;
   public final int zookeeperConnectTimeoutMs;
   public final int zookeeperClientTimeoutMs;
   public final int zookeeperRetryExpiryTimeMs;
+  public final int solrConnectTimeoutMs;
+  public final int solrSocketTimeoutMs;
 
   protected CloudSolrSinkConnectorConfig(Map<String, String> props) {
     super(config(), props);
@@ -50,6 +56,8 @@ class CloudSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
     this.zookeeperConnectTimeoutMs = getInt(ZOOKEEPER_CONNECT_TIMEOUT_CONFIG);
     this.zookeeperClientTimeoutMs = getInt(ZOOKEEPER_CLIENT_TIMEOUT_CONFIG);
     this.zookeeperRetryExpiryTimeMs = getInt(ZOOKEEPER_RETRY_EXPIRY_TIME_CONFIG);
+    this.solrConnectTimeoutMs = getInt(SOLR_CONNECT_TIMEOUT_CONFIG);
+    this.solrSocketTimeoutMs = getInt(SOLR_SOCKET_TIMEOUT_CONFIG);
   }
 
 
@@ -89,6 +97,20 @@ class CloudSolrSinkConnectorConfig extends SolrSinkConnectorConfig {
                 .group(CONNECTION_GROUP)
                 .defaultValue(3000)
                 .build()
+        ).define(
+             ConfigKeyBuilder.of(SOLR_CONNECT_TIMEOUT_CONFIG, ConfigDef.Type.INT)
+                 .importance(ConfigDef.Importance.LOW)
+                 .documentation(SOLR_CONNECT_TIMEOUT_DOC)
+                 .group(CONNECTION_GROUP)
+                 .defaultValue(15000)
+                 .build()
+        ).define(
+             ConfigKeyBuilder.of(SOLR_SOCKET_TIMEOUT_CONFIG, ConfigDef.Type.INT)
+                 .importance(ConfigDef.Importance.LOW)
+                 .documentation(SOLR_SOCKET_TIMEOUT_DOC)
+                 .group(CONNECTION_GROUP)
+                 .defaultValue(120000)
+                 .build()
         );
   }
 }

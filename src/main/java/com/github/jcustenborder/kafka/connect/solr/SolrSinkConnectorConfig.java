@@ -27,6 +27,8 @@ class SolrSinkConnectorConfig extends AbstractConfig {
   public static final String SOLR_USERNAME_CONFIG = "solr.username";
   public static final String SOLR_PASSWORD_CONFIG = "solr.password";
   public static final String SOLR_DELETE_DOCUMENTS_CONFIG = "solr.delete.documents.enabled";
+  public static final String SOLR_CONNECT_TIMEOUT_CONFIG = "solr.connect.timeout.ms";
+  public static final String SOLR_SOCKET_TIMEOUT_CONFIG = "solr.socket.timeout.ms";
 
   static final String SOLR_USERNAME_DOC = "The username to use for basic authentication.";
   static final String SOLR_PASSWORD_DOC = "The password to use for basic authentication.";
@@ -35,12 +37,16 @@ class SolrSinkConnectorConfig extends AbstractConfig {
       "the standard Solr commit setting.";
   static final String SOLR_DELETE_DOCUMENTS_DOC = "Flag to determine if the connector should delete documents. General " +
       "practice in Kafka is to treat a record that contains a key with a null value as a delete.";
+  static final String SOLR_CONNECT_TIMEOUT_DOC = "Set the connect timeout to the solr in ms.";
+  static final String SOLR_SOCKET_TIMEOUT_DOC = "Set the solr read timeout on all sockets in ms.";
 
   public final String username;
   public final String password;
   public final boolean useBasicAuthentication;
   public final int commitWithin;
   public final boolean deleteDocuments;
+  public final int solrConnectTimeoutMs;
+  public final int solrSocketTimeoutMs;
 
 
   protected SolrSinkConnectorConfig(ConfigDef configDef, Map<String, String> props) {
@@ -50,6 +56,8 @@ class SolrSinkConnectorConfig extends AbstractConfig {
     this.password = this.getPassword(SOLR_PASSWORD_CONFIG).value();
     this.useBasicAuthentication = !Strings.isNullOrEmpty(this.username);
     this.deleteDocuments = this.getBoolean(SOLR_DELETE_DOCUMENTS_CONFIG);
+    this.solrConnectTimeoutMs = this.getInt(SOLR_CONNECT_TIMEOUT_CONFIG);
+    this.solrSocketTimeoutMs = this.getInt(SOLR_SOCKET_TIMEOUT_CONFIG);
   }
 
   public static final String AUTHENTICATION_GROUP = "Authentication";
@@ -89,6 +97,20 @@ class SolrSinkConnectorConfig extends AbstractConfig {
                 .documentation(SOLR_DELETE_DOCUMENTS_DOC)
                 .group(INDEXING_GROUP)
                 .build()
-        );
+        ).define(
+            ConfigKeyBuilder.of(SOLR_CONNECT_TIMEOUT_CONFIG, ConfigDef.Type.INT)
+                .importance(ConfigDef.Importance.LOW)
+                .documentation(SOLR_CONNECT_TIMEOUT_DOC)
+                .group(CONNECTION_GROUP)
+                .defaultValue(15000)
+                .build()
+        ).define(
+            ConfigKeyBuilder.of(SOLR_SOCKET_TIMEOUT_CONFIG, ConfigDef.Type.INT)
+                .importance(ConfigDef.Importance.LOW)
+                .documentation(SOLR_SOCKET_TIMEOUT_DOC)
+                .group(CONNECTION_GROUP)
+                .defaultValue(120000)
+                .build()
+    );
   }
 }

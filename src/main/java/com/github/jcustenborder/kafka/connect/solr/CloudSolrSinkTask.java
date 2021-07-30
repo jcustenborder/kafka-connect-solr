@@ -54,6 +54,8 @@ public class CloudSolrSinkTask extends SolrSinkTask<CloudSolrSinkConnectorConfig
   @Override
   protected void process(String topic, UpdateRequest updateRequest) throws IOException, SolrServerException {
     final String collection = collection(topic);
+    // check solr if exists
+    checkSolrCollection(this.client, collection);
     updateRequest.setParam("collection", collection);
     UpdateResponse response = updateRequest.process(client);
     log.trace("process() - qtime = {} elapsedTime = {}", response.getQTime(), response.getElapsedTime());

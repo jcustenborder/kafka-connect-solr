@@ -22,7 +22,11 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.connect.errors.RetriableException;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.kafka.connect.sink.SinkTask;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.CloudSolrClient;
+import org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrClient;
+import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
@@ -32,6 +36,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
 
 public abstract class SolrSinkTask<CONFIG extends SolrSinkConnectorConfig> extends SinkTask {
   private static final Logger log = LoggerFactory.getLogger(SolrSinkTask.class);
@@ -40,6 +47,32 @@ public abstract class SolrSinkTask<CONFIG extends SolrSinkConnectorConfig> exten
   protected abstract CONFIG config(Map<String, String> settings);
 
   SolrInputDocumentConverter converter = new SolrInputDocumentConverter();
+
+  /* a set contains exists created topics and checked topics */
+  private final Set<String> existsTopics = new HashSet<>();
+
+  /**
+   * check solr if exists
+   *
+   * @param client SolrClient instance of {@link CloudSolrClient} or {@link ConcurrentUpdateSolrClient}
+   * @param collection collection name
+   */
+  public void checkSolrCollection(SolrClient client, String collection) throws IOException, SolrServerException {
+    if (!this.config.collectionAutoCreate) return;
+
+    if (!existsTopics.contains(collection)) {
+      List<String> collections = CollectionAdminRequest.listCollections(client);
+      if (!collections.contains(collection)) {
+        log.info("Auto create solr collection {}", collection);
+        client.request(CollectionAdminRequest.createCollection(collection,
+                this.config.collectionNumShards, this.config.collectionReplicationFactor)
+                .setMaxShardsPerNode(
+                        Math.max(this.config.collectionNumShards, this.config.collectionMaxShardsPerNode)
+                ));
+      }
+      existsTopics.add(collection);
+    }
+  }
 
   @Override
   public void start(Map<String, String> settings) {

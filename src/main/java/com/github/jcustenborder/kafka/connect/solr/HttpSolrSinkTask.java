@@ -53,6 +53,8 @@ public class HttpSolrSinkTask extends SolrSinkTask<HttpSolrSinkConnectorConfig> 
   @Override
   protected void process(String topic, UpdateRequest updateRequest) throws IOException, SolrServerException {
     SolrClient client = client(topic);
+    // check solr if exists
+    checkSolrCollection(client, topic);
     UpdateResponse response = updateRequest.process(client);
     log.trace("process() - qtime = {} elapsedTime = {}", response.getQTime(), response.getElapsedTime());
   }

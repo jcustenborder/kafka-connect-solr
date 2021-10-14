@@ -40,6 +40,17 @@ class SolrSinkConnectorConfig extends AbstractConfig {
   static final String SOLR_CONNECT_TIMEOUT_DOC = "Set the connect timeout to the solr in ms.";
   static final String SOLR_SOCKET_TIMEOUT_DOC = "Set the solr read timeout on all sockets in ms.";
 
+  /* solr auto create collection */
+  static final String SOLR_COLLECTION_AUTO_CREATE = "solr.collection.auto.create";
+  static final String SOLR_COLLECTION_AUTO_NUMSHARDS = "solr.collection.auto.numShards";
+  static final String SOLR_COLLECTION_AUTO_REPLICATIONFACTOR = "solr.collection.auto.replicationFactor";
+  static final String SOLR_COLLECTION_AUTO_MAXSHARDSPERNODE = "solr.collection.auto.maxShardsPerNode";
+
+  static final String SOLR_COLLECTION_AUTO_CREATE_DOC = "Whether to create collection automatically before writing to Solr.";
+  static final String SOLR_COLLECTION_AUTO_NUMSHARDS_DOC = "Solr Collection numShards config.";
+  static final String SOLR_COLLECTION_AUTO_REPLICATIONFACTOR_DOC = "Solr Collection replicationFactor config.";
+  static final String SOLR_COLLECTION_AUTO_MAXSHARDSPERNODE_DOC = "Solr Collection maxShardsPerNode config.";
+
   public final String username;
   public final String password;
   public final boolean useBasicAuthentication;
@@ -47,6 +58,10 @@ class SolrSinkConnectorConfig extends AbstractConfig {
   public final boolean deleteDocuments;
   public final int solrConnectTimeoutMs;
   public final int solrSocketTimeoutMs;
+  public final boolean collectionAutoCreate;
+  public final int collectionNumShards;
+  public final int collectionReplicationFactor;
+  public final int collectionMaxShardsPerNode;
 
 
   protected SolrSinkConnectorConfig(ConfigDef configDef, Map<String, String> props) {
@@ -58,6 +73,10 @@ class SolrSinkConnectorConfig extends AbstractConfig {
     this.deleteDocuments = this.getBoolean(SOLR_DELETE_DOCUMENTS_CONFIG);
     this.solrConnectTimeoutMs = this.getInt(SOLR_CONNECT_TIMEOUT_CONFIG);
     this.solrSocketTimeoutMs = this.getInt(SOLR_SOCKET_TIMEOUT_CONFIG);
+    this.collectionAutoCreate = this.getBoolean(SOLR_COLLECTION_AUTO_CREATE);
+    this.collectionNumShards = this.getInt(SOLR_COLLECTION_AUTO_NUMSHARDS);
+    this.collectionReplicationFactor = this.getInt(SOLR_COLLECTION_AUTO_REPLICATIONFACTOR);
+    this.collectionMaxShardsPerNode = this.getInt(SOLR_COLLECTION_AUTO_MAXSHARDSPERNODE);
   }
 
   public static final String AUTHENTICATION_GROUP = "Authentication";
@@ -111,6 +130,34 @@ class SolrSinkConnectorConfig extends AbstractConfig {
                 .group(CONNECTION_GROUP)
                 .defaultValue(120000)
                 .build()
+        ).define(
+                ConfigKeyBuilder.of(SOLR_COLLECTION_AUTO_CREATE, ConfigDef.Type.BOOLEAN)
+                        .importance(ConfigDef.Importance.LOW)
+                        .documentation(SOLR_COLLECTION_AUTO_CREATE_DOC)
+                        .group(CONNECTION_GROUP)
+                        .defaultValue(false)
+                        .build()
+        ).define(
+                ConfigKeyBuilder.of(SOLR_COLLECTION_AUTO_NUMSHARDS, ConfigDef.Type.INT)
+                        .importance(ConfigDef.Importance.LOW)
+                        .documentation(SOLR_COLLECTION_AUTO_NUMSHARDS_DOC)
+                        .group(CONNECTION_GROUP)
+                        .defaultValue(1)
+                        .build()
+        ).define(
+                ConfigKeyBuilder.of(SOLR_COLLECTION_AUTO_REPLICATIONFACTOR, ConfigDef.Type.INT)
+                        .importance(ConfigDef.Importance.LOW)
+                        .documentation(SOLR_COLLECTION_AUTO_REPLICATIONFACTOR_DOC)
+                        .group(CONNECTION_GROUP)
+                        .defaultValue(1)
+                        .build()
+        ).define(
+                ConfigKeyBuilder.of(SOLR_COLLECTION_AUTO_MAXSHARDSPERNODE, ConfigDef.Type.INT)
+                        .importance(ConfigDef.Importance.LOW)
+                        .documentation(SOLR_COLLECTION_AUTO_MAXSHARDSPERNODE_DOC)
+                        .group(CONNECTION_GROUP)
+                        .defaultValue(1)
+                        .build()
     );
   }
 }
